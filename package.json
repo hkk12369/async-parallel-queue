@@ -1,0 +1,27 @@
+{
+  "name": "async-parallel-queue",
+  "version": "0.1.0",
+  "description": "Execute a queue of async functions in parallel",
+  "main": "index.js",
+  "author": "Hitesh Khandelwal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hkk12369/async-parallel-queue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hkk12369/async-parallel-queue/issues"
+  },
+  "homepage": "https://github.com/hkk12369/async-parallel-queue#readme",
+  "keywords": [
+    "async-parallel-queue",
+    "parallel-queue",
+    "concurrent-queue",
+    "async-parallel",
+    "async",
+    "queue"
+  ],
+  "dependencies": {
+    "denque": "^1.5.0"
+  }
+}
