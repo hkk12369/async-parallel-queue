@@ -28,7 +28,7 @@ module.exports = class AsyncParallelQueue {
 	_next() {
 		this._pendingCount--;
 
-		if (this.queue.size > 0) {
+		if (this.queue.length > 0) {
 			if (!this._isPaused) {
 				this.queue.shift()();
 			}
@@ -135,7 +135,7 @@ module.exports = class AsyncParallelQueue {
 		}
 
 		this._isPaused = false;
-		while (this.queue.size > 0 && this._pendingCount < this._concurrency) {
+		while (this.queue.length > 0 && this._pendingCount < this._concurrency) {
 			this.queue.shift()();
 		}
 	}
@@ -150,7 +150,7 @@ module.exports = class AsyncParallelQueue {
 
 	waitEmpty() {
 		// Instantly resolve if the queue is empty
-		if (this.queue.size === 0) {
+		if (this.queue.length === 0) {
 			return Promise.resolve();
 		}
 
@@ -179,11 +179,11 @@ module.exports = class AsyncParallelQueue {
 	}
 
 	get size() {
-		return this.queue.size;
+		return this.queue.length;
 	}
 
     get length() {
-        return this.queue.size;
+        return this.queue.length;
     }
 
 	get pending() {

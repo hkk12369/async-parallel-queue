@@ -48,5 +48,5 @@ queue.isPaused ? 'paused' : 'not paused';
 // start / resume the queue
 queue.start();
 // get number of items in the queue
-queue.size;
+queue.length;
 ```
