@@ -30,7 +30,7 @@ module.exports = class AsyncParallelQueue {
 
 		if (this.queue.length > 0) {
 			if (!this._isPaused) {
-				this.queue.shift()();
+				this._run(this.queue.shift());
 			}
 		}
 		else {
@@ -45,7 +45,6 @@ module.exports = class AsyncParallelQueue {
 	}
 
     _run(opts) {
-        this._pendingCount++;
         const [type, resolve, reject, fnOrIndex, args = []] = opts;
         const fn = type === TYPE_FN ? fnOrIndex : this.fnMap.get(fnOrIndex);
         try {
@@ -68,6 +67,7 @@ module.exports = class AsyncParallelQueue {
 
     _process(opts) {
         if (!this._isPaused && this._pendingCount < this._concurrency) {
+            this._pendingCount++;
             this._run(opts);
         }
         else {
@@ -136,7 +136,7 @@ module.exports = class AsyncParallelQueue {
 
 		this._isPaused = false;
 		while (this.queue.length > 0 && this._pendingCount < this._concurrency) {
-			this.queue.shift()();
+			this._run(this.queue.shift());
 		}
 	}
 
