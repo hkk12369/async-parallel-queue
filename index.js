@@ -47,27 +47,22 @@ module.exports = class AsyncParallelQueue {
     _run(opts) {
         const [type, resolve, reject, fnOrIndex, args = []] = opts;
         const fn = type === TYPE_FN ? fnOrIndex : this.fnMap.get(fnOrIndex);
-        try {
-            Promise.resolve(fn(...args)).then(
-                (val) => {
-                    if (resolve) resolve(val);
-                    this._next();
-                },
-                (err) => {
-                    if (reject) reject(err);
-                    this._next();
-                }
-            );
-        }
-        catch (err) {
-            if (reject) reject(err);
-            this._next();
-        }
+        this._pendingCount++;
+        (async () => {
+            try {
+                const val = await fn(...args);
+                if (resolve) resolve(val);
+                this._next();
+            }
+            catch (err) {
+                if (reject) reject(err);
+                this._next();
+            }
+        })();
     }
 
     _process(opts) {
         if (!this._isPaused && this._pendingCount < this._concurrency) {
-            this._pendingCount++;
             this._run(opts);
         }
         else {
