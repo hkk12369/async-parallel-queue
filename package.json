@@ -1,6 +1,6 @@
 {
   "name": "async-parallel-queue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Execute a queue of async functions in parallel",
   "main": "index.js",
   "author": "Hitesh Khandelwal",
